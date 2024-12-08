@@ -11,7 +11,7 @@ dotEnv.config();
 
 const app=express();
 
-const PORT=3000;
+const PORT=process.env.PORT || 3000;
 
 mongoose.connect(process.env.MONGO_URI)
    .then(()=>console.log("Connected to Mongo database successfully"))
@@ -23,7 +23,7 @@ app.use('/vendor',vendorRoute);
 app.use('/firm',firmRoute);
 app.use('/product',productRoute);
 app.use('/uploads',express.static('uploads'));
-app.use('/home', (req,res)=>{
+app.use('/', (req,res)=>{
     res.send("<h1>Hello, Welcome to Speedy</h1>")
 });
 
