@@ -3,6 +3,7 @@ const Firm=require("../models/Firm");
 const jwt= require("jsonwebtoken");
 const bcrypt= require("bcryptjs");
 const dotEnv= require("dotenv");
+const path= require('path');
 
 dotEnv.config();
 
