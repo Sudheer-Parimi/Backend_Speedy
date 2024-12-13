@@ -6,7 +6,13 @@ const firmRoute= require('./routes/firmRoute');
 const productRoute= require('./routes/productRoute');
 const bodyParser=require("body-parser");
 const path= require('path');
-const cors= require('cors');
+
+const cors = require("cors");
+const corsOptions = {
+    origin: "https://speedy-frontend-42jk.vercel.app", // Update with your frontend domain
+    credentials: true,
+};
+app.use(cors(corsOptions));
 
 dotEnv.config();
 
@@ -20,7 +26,7 @@ mongoose.connect(process.env.MONGO_URI)
    .catch((error)=>console.log(error));
 
    
-app.use(cors());
+
 app.use(bodyParser.json());
 
 app.use('/vendor',vendorRoute);
