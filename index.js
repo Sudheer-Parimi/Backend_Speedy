@@ -8,11 +8,8 @@ const bodyParser=require("body-parser");
 const path= require('path');
 
 const cors = require("cors");
-const corsOptions = {
-    origin: "https://speedy-frontend-42jk.vercel.app", // Update with your frontend domain
-    credentials: true,
-};
-app.use(cors(corsOptions));
+
+app.use(cors());
 
 dotEnv.config();
 
