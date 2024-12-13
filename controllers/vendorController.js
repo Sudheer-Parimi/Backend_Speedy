@@ -34,7 +34,7 @@ const vendorRegister= async(req,res)=>{
 
     }
     catch(error){
-        console.log(error);
+        console.error("Error in vendorRegister:", error); 
         res.status(500).json({error:"Internal server error"});
     }
 
