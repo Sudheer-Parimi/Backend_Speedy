@@ -28,7 +28,7 @@ const addFirm = async(req, res) => {
         }
 
         if (vendor.firm.length > 0) {
-            return res.status(400).json({ message: "vendor can have only one firm" });
+            return res.status(400).json({ message: "Vendor can have only one firm" });
         }
 
         const firm = new Firm({
