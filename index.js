@@ -9,7 +9,7 @@ const path= require('path');
 
 const cors = require("cors");
 
-app.use(cors());
+
 
 dotEnv.config();
 
@@ -23,7 +23,7 @@ mongoose.connect(process.env.MONGO_URI)
    .catch((error)=>console.log(error));
 
    
-
+app.use(cors());
 app.use(bodyParser.json());
 
 app.use('/vendor',vendorRoute);
