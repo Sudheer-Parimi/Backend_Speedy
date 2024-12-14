@@ -34,8 +34,8 @@ const vendorRegister= async(req,res)=>{
 
     }
     catch(error){
-        console.error("Error in vendorRegister:", error); 
-        res.status(500).json({error:"Internal server error"});
+        console.error("Error in vendorRegister:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 
 }
@@ -47,7 +47,7 @@ const vendorLogin= async(req,res)=>{
 
     try{
 
-    const vendor=await  Vendor.findOne({email});
+    const vendor= await  Vendor.findOne({email});
 
     if(!vendor){
         console.log("mail is not in records");
@@ -62,15 +62,14 @@ const vendorLogin= async(req,res)=>{
     }
     const token=jwt.sign({vendorId:vendor._id},secretkey,{expiresIn:"1h"});
 
-    const vendorId= vendor._id;
+    res.status(201).json({message:"vendor login successful",token,vendorId:vendor._id});
 
-    res.status(201).json({message:"vendor login successful",token,vendorId});
     console.log("vendor loggedin:  ", "token generated:",token);
 
     }
     catch(error){
-        console.log(error);
-        res.status(500).json({error:"Internal server error"});
+        console.error("Error in vendorLogin:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 const getAllVendors= async(req,res)=>{
@@ -79,29 +78,31 @@ const getAllVendors= async(req,res)=>{
         res.json({vendors});
     }
     catch(error){
-        console.log(error);
-        res.status(500).json({error:"Internal server error"});
+        console.error("Error in getAllVendors:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 const getVendorById= async(req,res)=>{
     const vendorId= await req.params.id;
     try{
-        const vendor= await Vendor.findById(vendorId);
+        //check for vendor
+        const vendor= await Vendor.findById(vendorId).populate("firm");
         if(!vendor){
             return res.status(404).json({message:"Vendor not found"});
         }
-        if(vendor.firm){
-            const vendorFirmId= vendor.firm[0]._id;
-            const firm= await Firm.findById(vendorFirmId);
+        let firmName=null;
+        let vendorFirmId=null;
 
-            const firmName= firm.firmName;
+        if (vendor.firm) {
+            vendorFirmId = vendor.firm._id;
+            firmName = vendor.firm.firmName;
         }
-
+        
         res.status(200).json({vendor,vendorFirmId,firmName});
     }
     catch(error){
-        console.log(error);
-        res.status(500).json({error:"Internal server error"});
+        console.error("Error in getVendorById:", error);
+        res.status(500).json({ error: "Internal server error" });
     }
 }
 
